@@ -4,22 +4,39 @@
 
 ### *Installation* ###
 <br/>
+
 **Cocoapod** 
+
 <br/>
+
 ```
 pod 'IPager', :git => 'https://github.com/YousefAnsary/iPager.git
 ```
+
 <br/>
+
 **Swift Package Manager**
+
 <br/>
+
 ```
 .package(url: "https://github.com/YousefAnsary/iPager.git", from: "1.0")
 ```
+
 <br/>
 ------------------------------------------------
+<br/>
+
+### ***Usage***
+
+<br/>
+
+### All you need is putting a UIView with the relevant constraints in your XIB/StoryBoard and make its type to `IPager` and customize as you want using Inspectable Properties in Interface Builder or using Code 
+
+<br/> 
+
 ### ***Customizations*** <br/>
-### All you need is putting a UIView with the relevant constraints in your XIB/StoryBoard and make its type to `IPager` and customize as you want using Inspectable Properties in Interface Builder or using Code <br/> 
-### ***Customizations*** <br/>
+
 ```
     @IBInspectable public var dotSize: CGSize // def is 8*8
     @IBInspectable public var selectedDotSize: CGSize // def is 12*12
