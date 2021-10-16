@@ -1,3 +1,3 @@
 # IPager
 
-A description of this package.
+Simple Flexible Pager

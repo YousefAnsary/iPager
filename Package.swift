@@ -5,6 +5,9 @@ import PackageDescription
 
 let package = Package(
     name: "IPager",
+    platforms: [
+        .iOS(.v11)
+    ],
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
@@ -21,8 +24,9 @@ let package = Package(
         .target(
             name: "IPager",
             dependencies: []),
-        .testTarget(
-            name: "IPagerTests",
-            dependencies: ["IPager"]),
-    ]
+//        .testTarget(
+//            name: "IPagerTests",
+//            dependencies: ["IPager"]),
+    ],
+    swiftLanguageVersions: [.v4]
 )
