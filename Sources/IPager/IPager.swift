@@ -21,7 +21,10 @@ public class IPager: UIView {
     public var tint: UIColor = .gray
     @IBInspectable
     public var selectedTint: UIColor = .blue
+    @IBInspectable
+    public var isPageSelectionEnabled = false
     //
+    public var didSelectedPageAt: ((Int) -> Void)?
     public var numberOfPages: Int = 3 {
         didSet {
             self.updateCVWidth()
@@ -40,7 +43,7 @@ public class IPager: UIView {
         layout.minimumInteritemSpacing = spacing
         let collectionView = UICollectionView(frame: self.frame, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
-        collectionView.isUserInteractionEnabled = false
+        collectionView.isScrollEnabled = false
         collectionView.register(
             IPagerCell.self,
             forCellWithReuseIdentifier: String(describing: IPagerCell.self)
@@ -141,5 +144,14 @@ extension IPager: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
         return indexPath.row == currentPage ? selectedDotSize : dotSize
+    }
+    
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        didSelectItemAt indexPath: IndexPath
+    ) {
+        guard isPageSelectionEnabled else { return }
+        self.currentPage = indexPath.row
+        self.didSelectedPageAt?(self.currentPage)
     }
 }
