@@ -22,7 +22,7 @@ public class IPager: UIView {
     @IBInspectable
     public var selectedTint: UIColor = .blue
     //
-    public var numberOfPages: Int = 0 {
+    public var numberOfPages: Int = 3 {
         didSet {
             self.updateCVWidth()
             self.collectionView.reloadData()
@@ -50,35 +50,33 @@ public class IPager: UIView {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
-    private var cvWidthConstraint: NSLayoutConstraint?
+    private var cvWidthConstraint: NSLayoutConstraint!
+    private var contentWidth: CGFloat {
+        let totalCellWidth = dotSize.width * CGFloat(numberOfPages - 1) + selectedDotSize.width
+        let totalSpacingWidth = spacing * CGFloat(numberOfPages - 1)
+        let contentWidth = totalCellWidth + totalSpacingWidth
+        return contentWidth
+    }
     
     // MARK: - UIView Overridances
     public override func awakeFromNib() {
         super.awakeFromNib()
         self.addSubview(collectionView)
         self.backgroundColor = .clear
+        cvWidthConstraint = collectionView.widthAnchor.constraint(
+            equalToConstant: min(contentWidth, self.frame.width)
+        )
         NSLayoutConstraint.activate([
             collectionView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             collectionView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            collectionView.heightAnchor.constraint(equalTo: self.heightAnchor)
+            collectionView.heightAnchor.constraint(equalTo: self.heightAnchor),
+            cvWidthConstraint
         ])
-    }
-    
-    public override func layoutSubviews() {
-        cvWidthConstraint = collectionView.widthAnchor.constraint(
-            equalToConstant: self.frame.width
-        )
-        cvWidthConstraint?.isActive = true
     }
     
     // MARK: - Private Methods
     private func updateCVWidth() {
-        let totalCellWidth = dotSize.width * CGFloat(numberOfPages - 1) + selectedDotSize.width
-        let totalSpacingWidth = spacing * CGFloat(numberOfPages - 1)
-        let contentWidth = totalCellWidth + totalSpacingWidth
-        cvWidthConstraint = collectionView.widthAnchor.constraint(
-            equalToConstant: min(contentWidth, self.frame.width)
-        )
+        cvWidthConstraint.constant = min(contentWidth, self.frame.width)
     }
     
     private func updateSelectedPage() {
