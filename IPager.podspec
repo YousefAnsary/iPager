@@ -2,8 +2,8 @@ Pod::Spec.new do |s|
   s.platform = :ios
   s.ios.deployment_target = '11.0'
   s.name             = 'IPager'
-  s.summary          = 'iPager is a flexible simple pager for iOS'
-  s.description      = 'iPager is a flexible simple pager for iOS'
+  s.summary          = 'iPager is a flexible simple pager for iOS built in Swift'
+  s.description      = 'iPager is a flexible simple pager for iOS built in Swift'
 
   s.version          = '1.0.0'
 
