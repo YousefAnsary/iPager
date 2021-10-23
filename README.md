@@ -2,7 +2,7 @@
 
 ## *Simple Flexible Pager for iOS built in Swift*
 
-![](https://raw.githubusercontent.com/YousefAnsary/IPager/master/logo.png?s=550)
+![](https://raw.githubusercontent.com/YousefAnsary/iPager/main/screenshot.png?token=AI3MGYQNPV2VCCGX5OYY3PDBOPL66)
 
 ### *Installation* ###
 <br/>
