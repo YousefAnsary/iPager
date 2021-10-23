@@ -4,6 +4,13 @@
 
 ![](https://raw.githubusercontent.com/YousefAnsary/iPager/main/screenshot.png)
 
+### *Users* ###
+<br/>
+
+I have created `IPager` to meet the demands of UI/UX team at [Robusta Studio ©](https://robustastudio.com/) and it is used in multiple projects there
+
+<br/>
+
 ### *Installation* ###
 <br/>
 
