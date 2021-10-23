@@ -12,7 +12,7 @@ public class IPager: UIView {
     @IBInspectable
     public var dotSize: CGSize = CGSize(width: 8, height: 8)
     @IBInspectable
-    public var selectedDotSize: CGSize = CGSize(width: 12, height: 12)
+    public var selectedDotSize: CGSize = CGSize(width: 14, height: 14)
     @IBInspectable
     public var spacing: CGFloat = 8
     @IBInspectable
@@ -54,6 +54,9 @@ public class IPager: UIView {
         return collectionView
     }()
     private var cvWidthConstraint: NSLayoutConstraint!
+    private var collectionWidth: CGFloat {
+        min(contentWidth, frame.width)
+    }
     private var contentWidth: CGFloat {
         let totalCellWidth = dotSize.width * CGFloat(numberOfPages - 1) + selectedDotSize.width
         let totalSpacingWidth = spacing * CGFloat(numberOfPages - 1)
@@ -61,14 +64,25 @@ public class IPager: UIView {
         return contentWidth
     }
     
-    // MARK: - UIView Overridances
-    public override func awakeFromNib() {
-        super.awakeFromNib()
+    // MARK: - Initializers
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.setupViews()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        self.setupViews()
+    }
+    
+    // MARK: - Private Methods
+    private func setupViews() {
         self.addSubview(collectionView)
         self.backgroundColor = .clear
         cvWidthConstraint = collectionView.widthAnchor.constraint(
-            equalToConstant: min(contentWidth, self.frame.width)
+            equalToConstant: contentWidth
         )
+        self.updateCVWidth()
         NSLayoutConstraint.activate([
             collectionView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             collectionView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
@@ -77,9 +91,15 @@ public class IPager: UIView {
         ])
     }
     
-    // MARK: - Private Methods
     private func updateCVWidth() {
-        cvWidthConstraint.constant = min(contentWidth, self.frame.width)
+        /*
+         * Postponing calculation in case of zero frame caused by UIView.init()
+         * to avoid calculating wrong width (will be zero)
+         */
+        let latencyTime = frame == .zero ? 0.3 : 0
+        DispatchQueue.main.asyncAfter(deadline: .now() + latencyTime) {
+            self.cvWidthConstraint.constant = self.collectionWidth
+        }
     }
     
     private func updateSelectedPage() {
